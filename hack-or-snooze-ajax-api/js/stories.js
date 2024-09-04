@@ -28,21 +28,23 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+  const showDltBtn = Boolean(currentUser && story.username === currentUser.username);
   const isFavorite = currentUser && currentUser.isFavorite( story );
   const starIcon = isFavorite ? 'fas' : 'far'; // star icons
   return $(`
-      <li id="${story.storyId}">
-        <span class="star">
-          <i class="${starIcon} fa-star"></i>
-        </span>
-        <a href="${story.url}" target="a_blank" class="story-link">
-          ${story.title}
-        </a>
-        <small class="story-hostname">(${hostName})</small>
-        <small class="story-author">by ${story.author}</small>
-        <small class="story-user">posted by ${story.username}</small>
-      </li>
-    `);
+    <li id="${story.storyId}">
+      ${showDltBtn ? `<button class="delete-story-btn" style="display: block; background-color: red;">X</button>` : ""}
+      <span class="star">
+        <i class="${starIcon} fa-star"></i>
+      </span>
+      <a href="${story.url}" target="_blank" class="story-link">
+        ${story.title}
+      </a>
+      <small class="story-hostname">(${hostName})</small>
+      <small class="story-author">by ${story.author}</small>
+      <small class="story-user">posted by ${story.username}</small>
+    </li>
+  `);
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */

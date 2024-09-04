@@ -90,6 +90,18 @@ $allStoriesList.on('click', '.star i', async function( evt ) {
 $('#nav-favorites').on('click', function() {
   hidePageComponents(); // hides all other components of the page
   putFavoritesOnPage(); // call func to show favs stories
+});
+
+$allStoriesList.on('click', '.delete-story-btn', async function(evt) {
+  // Find the story's ID
+  const $closestLi = $(evt.target).closest("li");
+  const storyId = $closestLi.attr("id");
+
+  // Call the removeStory method on the current user to delete the story
+  await currentUser.removeStory(storyId);
+
+  // Remove the story from the DOM
+  $closestLi.remove();
 })
 
 // Once the DOM is entirely loaded, begin the app

@@ -231,4 +231,21 @@ class User {
       data: { token: this.loginToken }
     });
   }
+
+  // removes a story from the API and the users list of stories
+  async removeStory(storyId) {
+    
+    // send a DELETE request to the api to remove the story 
+    await axios({
+      url: `${BASE_URL}/stories/${storyId}`,
+      method: 'DELETE',
+      data: { token: this.loginToken }
+    });
+
+    // filter out the removed story from the users ownStories array
+    this.ownStories = this.ownStories.filter(s => s.storyId !== storyId);
+
+    // filter out the rmeoved story from the users favs array if it was faved 
+    this.favorites = this.favorites.filter(s => s.storyId !== storyId);
+  }
 }
