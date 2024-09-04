@@ -28,8 +28,13 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+  const isFavorite = currentUser && currentUser.isFavorite( story );
+  const starIcon = isFavorite ? 'fas' : 'far'; // star icons
   return $(`
       <li id="${story.storyId}">
+        <span class="star">
+          <i class="${starIcon} fa-star"></i>
+        </span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -43,11 +48,10 @@ function generateStoryMarkup(story) {
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
 function putStoriesOnPage() {
-  console.debug("putStoriesOnPage");
+  console.debug("putStoriesOnPage"); 
 
   $allStoriesList.empty();
 
-  // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);

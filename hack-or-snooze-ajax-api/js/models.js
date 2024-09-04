@@ -205,4 +205,30 @@ class User {
       return null;
     }
   }
+
+  // determine if a story is in the user's list of favs
+  isFavorite(story) {
+    return this.favorites.some(s => s.storyId === story.storyId);
+  }
+
+  // add a story to the user list of favs and update api
+  async favoriteStory(story){
+    this.favorites.push(story);
+    await this._addOrRemoveFavorite('add', story);
+  }
+
+  // removes a story from the user list iof favs and updates the api
+  async unfavoriteStory(story) {
+    this.favorites = this.favorites.filter(s => s.storyId !== story.storyId);
+    await this._addOrRemoveFavorite('remove', story);
+  }
+
+  async _addOrRemoveFavorite(action, story) {
+    const method = action === 'add' ? 'POST' : 'DELETE';
+    await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: method,
+      data: { token: this.loginToken }
+    });
+  }
 }
