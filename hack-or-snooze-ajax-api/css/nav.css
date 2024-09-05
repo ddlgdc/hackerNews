@@ -4,20 +4,26 @@ nav {
   display: flex;
   background-color: #ff6600;
   align-items: center;
+  height: 50px;
   padding: 5px 20px;
   border-radius: 3px 3px 0 0;
+  margin: 0px;
 }
 
 .navbar-brand {
   font-weight: bold;
 }
 
-.nav-link {
+.nav-link, #nav-favorites, #nav-logout {
   font-size: 0.85rem;
-  margin: 0 3px;
+  padding: 0 10px;
+  border-right: 2px solid black;
 }
 
-.nav-right {
-  margin-left: auto;
-  text-align: right;
+.nav-right, a {
+  font-size: small;
+}
+
+#nav-logout {
+  border-right: none;
 }
